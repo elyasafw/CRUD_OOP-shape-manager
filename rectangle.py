@@ -20,5 +20,5 @@ class Rectangle(Shape):
             "Width": self.width,
             "Height": self.height,
             "Area": self.get_area(),
-            "Perimeter": self.get_area()
+            "Perimeter": self.get_perimeter()
             }
