@@ -13,7 +13,38 @@ def get_next_id(manager):
 
 
 def add_shape(manager):
-    pass
+    print("\n1. Square")
+    print("2. Rectangle")
+    print("3. Circle")
+    print("4. Triangle")
+    print("5. Hexagon")
+    choice = input("Select shape: ").strip()
+    shape_id = get_next_id(manager)
+
+    if choice == "1":
+        side = float(input("Enter side: "))
+        shape = Square(shape_id, "square", side)
+    elif choice == "2":
+        width = float(input("Enter width: "))
+        height = float(input("Enter height: "))
+        shape = Rectangle(shape_id, "rectangle", width, height)
+    elif choice == "3":
+        radius = float(input("Enter radius: "))
+        shape = Circle(shape_id, "circle", radius)
+    elif choice == "4":
+        a = float(input("Enter side A: "))
+        b = float(input("Enter side B: "))
+        c = float(input("Enter side C: "))
+        shape = Triangle(shape_id, "triangle", a, b, c)
+    elif choice == "5":
+        side = float(input("Enter side: "))
+        shape = Hexagon(shape_id, "hexagon", side)
+    else:
+        print("Invalid choice")
+        return
+
+    manager.create_shape(shape)
+    print("Shape added successfully")
 
 
 def show_all_shapes(manager):
