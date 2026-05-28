@@ -7,27 +7,31 @@ from hexagon import Hexagon
 
 
 def get_positive_float(prompt):
-    while True:
+    valid = False
+    while not valid:
         try:
             value = float(input(prompt))
             if value <= 0:
                 print("\nValue must be greater than 0.")
             else:
-                return value
+                valid = True
         except ValueError:
-            print("\nInvalid input.. Please enter a number.")
+            print("\nInvalid input. Please enter a number.")
+    return value
 
 
 def get_positive_int(prompt):
-    while True:
+    valid = False
+    while not valid:
         try:
             value = int(input(prompt))
             if value <= 0:
                 print("\nValue must be greater than 0.")
             else:
-                return value
+                valid = True
         except ValueError:
-            print("\nInvalid input.. Please enter a whole number.")
+            print("\nInvalid input. Please enter a whole number.")
+    return value
 
 
 def get_next_id(manager):
@@ -140,7 +144,8 @@ def main():
     print("      SHAPE MANAGER")
     print("=" * 30)
 
-    while True:
+    running = True
+    while running:
         print_menu()
         choice = input("\nEnter choice: ").strip()
 
@@ -154,7 +159,7 @@ def main():
             delete_shape(manager)
         elif choice == "5":
             print("\nGoodbye!\n")
-            break
+            running = False
         else:
             print("\nInvalid choice...")
 
