@@ -20,7 +20,13 @@ class ShapeManager:
         return self.shapes
 
     def update_shape(self, shape_id, new_data):
-        pass
+        for shape in self.shapes:
+            if shape.id == shape_id:
+                for key, value in new_data.items():
+                    setattr(shape, key, value)
+                self.save_to_json()
+                return True
+        return False
 
     def delete_shape(self, shape_id):
         pass
