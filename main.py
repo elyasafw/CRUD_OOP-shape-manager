@@ -46,22 +46,22 @@ def add_shape(manager):
     shape_id = get_next_id(manager)
 
     if choice == "1":
-        side = float(input("Enter side: "))
+        side = get_positive_float("Enter side: ")
         shape = Square(shape_id, "square", side)
     elif choice == "2":
-        width = float(input("Enter width: "))
-        height = float(input("Enter height: "))
+        width = get_positive_float("Enter width: ")
+        height = get_positive_float("Enter height: ")
         shape = Rectangle(shape_id, "rectangle", width, height)
     elif choice == "3":
-        radius = float(input("Enter radius: "))
+        radius = get_positive_float("Enter radius: ")
         shape = Circle(shape_id, "circle", radius)
     elif choice == "4":
-        a = float(input("Enter side A: "))
-        b = float(input("Enter side B: "))
-        c = float(input("Enter side C: "))
+        a = get_positive_float("Enter side A: ")
+        b = get_positive_float("Enter side B: ")
+        c = get_positive_float("Enter side C: ")
         shape = Triangle(shape_id, "triangle", a, b, c)
     elif choice == "5":
-        side = float(input("Enter side: "))
+        side = get_positive_float("Enter side: ")
         shape = Hexagon(shape_id, "hexagon", side)
     else:
         print("Invalid choice")
