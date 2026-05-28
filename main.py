@@ -112,11 +112,7 @@ def update_shape(manager):
 
 
 def delete_shape(manager):
-    try:
-        shape_id = int(input("Enter shape id: "))
-    except ValueError:
-        print("Invalid id")
-        return
+    shape_id = get_positive_int("Enter shape id: ")
 
     if manager.delete_shape(shape_id):
         print("Shape deleted successfully")
