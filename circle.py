@@ -19,5 +19,5 @@ class Circle(Shape):
             "Type": self.type,
             "Radius": self.radius,
             "Area": self.get_area(),
-            "Perimeter": self.get_area()
+            "Perimeter": self.get_perimeter()
             }
