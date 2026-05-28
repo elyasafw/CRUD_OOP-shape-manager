@@ -29,7 +29,12 @@ class ShapeManager:
         return False
 
     def delete_shape(self, shape_id):
-        pass
+        for shape in self.shapes:
+            if shape.id == shape_id:
+                self.shapes.remove(shape)
+                self.save_to_json()
+                return True
+        return False
 
     def save_to_json(self):
         with open("shapes.json", "w") as f:
