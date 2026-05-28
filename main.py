@@ -6,6 +6,30 @@ from triangle import Triangle
 from hexagon import Hexagon
 
 
+def get_positive_float(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            if value <= 0:
+                print("Value must be greater than 0.")
+            else:
+                return value
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def get_positive_int(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value <= 0:
+                print("Value must be greater than 0.")
+            else:
+                return value
+        except ValueError:
+            print("Invalid input. Please enter a whole number.")
+
+
 def get_next_id(manager):
     if not manager.shapes:
         return 1
