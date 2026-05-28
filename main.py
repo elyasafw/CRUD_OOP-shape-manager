@@ -11,11 +11,11 @@ def get_positive_float(prompt):
         try:
             value = float(input(prompt))
             if value <= 0:
-                print("Value must be greater than 0.")
+                print("\nValue must be greater than 0.")
             else:
                 return value
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("\nInvalid input.. Please enter a number.")
 
 
 def get_positive_int(prompt):
@@ -23,11 +23,11 @@ def get_positive_int(prompt):
         try:
             value = int(input(prompt))
             if value <= 0:
-                print("Value must be greater than 0.")
+                print("\nValue must be greater than 0.")
             else:
                 return value
         except ValueError:
-            print("Invalid input. Please enter a whole number.")
+            print("\nInvalid input.. Please enter a whole number.")
 
 
 def get_next_id(manager):
@@ -65,7 +65,7 @@ def add_shape(manager):
         side = get_positive_float("Enter side: ")
         shape = Hexagon(shape_id, "hexagon", side)
     else:
-        print("\nInvalid choice.")
+        print("\nInvalid choice...")
         return
 
     manager.create_shape(shape)
@@ -75,7 +75,7 @@ def add_shape(manager):
 def show_all_shapes(manager):
     shapes = manager.get_all_shapes()
     if not shapes:
-        print("\nNo shapes found.")
+        print("\nNo shapes found...")
         return
     print()
     for shape in shapes:
@@ -89,7 +89,7 @@ def update_shape(manager):
 
     shape = next((s for s in manager.shapes if s.id == shape_id), None)
     if not shape:
-        print("\nShape not found.")
+        print("\nShape not found...")
         return
 
     shape_type = shape.type.lower()
@@ -120,7 +120,7 @@ def delete_shape(manager):
     if manager.delete_shape(shape_id):
         print("\nShape deleted successfully!")
     else:
-        print("\nShape not found.")
+        print("\nShape not found...")
 
 
 def print_menu():
@@ -156,7 +156,7 @@ def main():
             print("\nGoodbye!\n")
             break
         else:
-            print("\nInvalid choice.")
+            print("\nInvalid choice...")
 
 
 if __name__ == "__main__":
