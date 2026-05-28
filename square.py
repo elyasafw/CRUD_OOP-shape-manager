@@ -18,5 +18,5 @@ class Square(Shape):
             "Type": self.type,
             "Side": self.side,
             "Area": self.get_area(),
-            "Perimeter": self.get_area()
+            "Perimeter": self.get_perimeter()
             }
