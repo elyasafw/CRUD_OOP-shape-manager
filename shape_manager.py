@@ -17,7 +17,7 @@ class ShapeManager:
         self.save_to_json()
 
     def get_all_shapes(self):
-        pass
+        return self.shapes
 
     def update_shape(self, shape_id, new_data):
         pass
