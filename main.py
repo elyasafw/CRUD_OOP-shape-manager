@@ -48,7 +48,14 @@ def add_shape(manager):
 
 
 def show_all_shapes(manager):
-    pass
+    shapes = manager.get_all_shapes()
+    if not shapes:
+        print("No shapes found")
+        return
+    for shape in shapes:
+        for key, value in shape.to_dict().items():
+            print(f"{key}: {value}")
+        print()
 
 
 def update_shape(manager):
