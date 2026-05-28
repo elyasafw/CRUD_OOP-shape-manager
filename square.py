@@ -16,7 +16,7 @@ class Square(Shape):
         return {
             "ID": self.id,
             "Type": self.type,
-            "Width": self.side,
+            "Side": self.side,
             "Area": self.get_area(),
             "Perimeter": self.get_area()
             }
