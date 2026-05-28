@@ -13,7 +13,8 @@ class ShapeManager:
         self.load_from_json()
 
     def create_shape(self, shape):
-        pass
+        self.shapes.append(shape)
+        self.save_to_json()
 
     def get_all_shapes(self):
         pass
