@@ -83,11 +83,7 @@ def show_all_shapes(manager):
 
 
 def update_shape(manager):
-    try:
-        shape_id = int(input("Enter shape id: "))
-    except ValueError:
-        print("Invalid id")
-        return
+    shape_id = get_positive_int("Enter shape id: ")
 
     shape = next((s for s in manager.shapes if s.id == shape_id), None)
     if not shape:
@@ -98,18 +94,18 @@ def update_shape(manager):
     new_data = {}
 
     if shape_type == "square":
-        new_data["side"] = float(input("Enter new side: "))
+        new_data["side"] = get_positive_float("Enter new side: ")
     elif shape_type == "rectangle":
-        new_data["width"] = float(input("Enter new width: "))
-        new_data["height"] = float(input("Enter new height: "))
+        new_data["width"] = get_positive_float("Enter new width: ")
+        new_data["height"] = get_positive_float("Enter new height: ")
     elif shape_type == "circle":
-        new_data["radius"] = float(input("Enter new radius: "))
+        new_data["radius"] = get_positive_float("Enter new radius: ")
     elif shape_type == "triangle":
-        new_data["a"] = float(input("Enter new side A: "))
-        new_data["b"] = float(input("Enter new side B: "))
-        new_data["c"] = float(input("Enter new side C: "))
+        new_data["a"] = get_positive_float("Enter new side A: ")
+        new_data["b"] = get_positive_float("Enter new side B: ")
+        new_data["c"] = get_positive_float("Enter new side C: ")
     elif shape_type == "hexagon":
-        new_data["side"] = float(input("Enter new side: "))
+        new_data["side"] = get_positive_float("Enter new side: ")
 
     manager.update_shape(shape_id, new_data)
     print("Shape updated successfully")
