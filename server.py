@@ -5,7 +5,6 @@ import shape_manager as sm
 
 
 class CreateShapeModel(BaseModel):
-    ID: int | None = None
     Type: str
     Area: float
     Perimeter: float
@@ -33,23 +32,17 @@ app = FastAPI()
 MANAGER = sm.ShapeManager()
 
  
-@app.get('/shapes')
+@app.get('/shapes', status_code=status.HTTP_200_OK)
 def get_shapes():
     shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
     return shapes_list
 
 
-@app.post('/shapes')
+@app.post('/shapes', status_code=status.HTTP_201_CREATED)
 def create_shape(new_shape: CreateShapeModel):
     next_id = len(MANAGER.shapes) + 1
     clean_shape_dict = new_shape.model_dump(exclude_unset=True)
     clean_shape_dict["ID"] = next_id
-    for shape in MANAGER.shapes:
-        if shape.id == next_id:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Shape id already in shapes list !"
-                )
     new_shape_object = MANAGER._dict_to_shape(clean_shape_dict)
     if not new_shape_object:
         raise HTTPException(
@@ -62,15 +55,19 @@ def create_shape(new_shape: CreateShapeModel):
     }
 
 
-@app.get('/shapes/total-area')
+@app.get('/shapes/total-area', status_code=status.HTTP_200_OK)
 def calculate_total_shapes():
     shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
+    if not shapes_list:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The shape list is empty..."
+            )    
     areas_list = [shape["Area"] for shape in shapes_list]
-    print(areas_list)
     return {"message": f"Total area of ​​all shapes: {round(sum(areas_list), 3)}"}
 
 
-@app.get('/shapes/{id}')
+@app.get('/shapes/{id}', status_code=status.HTTP_200_OK)
 def get_shape(id: int):
     shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
     for shape in shapes_list:
@@ -78,11 +75,11 @@ def get_shape(id: int):
             return shape
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail="Shape ID not found in shapes list.."
+        detail=f"Shape ID not found in shapes list.."
         )
 
 
-@app.put('/shapes/{id}')
+@app.put('/shapes/{id}', status_code=status.HTTP_200_OK)
 def update_shape(id: int, update_data: UpdateShapeModel):
     clean_updates = update_data.model_dump(exclude_unset=True)
     clean_updates_lower = {k.lower(): v for k, v in clean_updates.items()}
@@ -95,7 +92,7 @@ def update_shape(id: int, update_data: UpdateShapeModel):
     return {"message": "Shape updated successfully"}
 
 
-@app.delete('/shapes/{id}')
+@app.delete('/shapes/{id}', status_code=status.HTTP_200_OK)
 def delete_shape(id: int):
     del_success = MANAGER.delete_shape(id)
     if not del_success:
