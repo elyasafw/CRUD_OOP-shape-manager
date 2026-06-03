@@ -38,6 +38,7 @@ class ShapeManager:
 
     def save_to_json(self):
         with open("shapes.json", "w") as f:
+            f.seek(0)
             json.dump([shape.to_dict() for shape in self.shapes], f, indent=4)
 
     def load_from_json(self):
@@ -63,7 +64,7 @@ class ShapeManager:
         if shape_type == "circle":
             return Circle(shape_id, "circle", data["Radius"])
         if shape_type == "triangle":
-            return Triangle(shape_id, "triangle", data["Side A"], data["Side B"], data["Side C"])
+            return Triangle(shape_id, "triangle", data["Side_A"], data["Side_B"], data["Side_C"])
         if shape_type == "hexagon":
             return Hexagon(shape_id, "hexagon", data["Side"])
         return None

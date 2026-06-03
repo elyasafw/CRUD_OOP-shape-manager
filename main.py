@@ -1,3 +1,5 @@
+# GitHub link:  https://github.com/elyasafw/CRUD_OOP-shape-manager.git
+
 from shape_manager import ShapeManager
 from square import Square
 from rectangle import Rectangle
