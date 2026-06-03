@@ -80,10 +80,21 @@ def get_shape(id: int):
 def update_shape(id: int, update_data: UpdateShapeModel):
     clean_updates = update_data.model_dump(exclude_unset=True)
     clean_updates_lower = {k.lower(): v for k, v in clean_updates.items()}
-    success = MANAGER.update_shape(id, clean_updates_lower)
-    if not success:
+    up_success = MANAGER.update_shape(id, clean_updates_lower)
+    if not up_success:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Shape ID not found in shapes list..."
         )
     return {"message": "Shape updated successfully"}
+
+
+@app.delete('/shapes/{id}')
+def delete_shape(id: int):
+    del_success = MANAGER.delete_shape(id)
+    if not del_success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Shape ID not found in shapes list...",
+        )
+    return {"message": f"Shape ID {id} was deleted successfully", "id": id}
