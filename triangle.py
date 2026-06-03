@@ -20,9 +20,9 @@ class Triangle(Shape):
         return {
             "ID": self.id,
             "Type": self.type,
-            "Side A": self.a,
-            "Side B": self.b,
-            "Side C": self.c,
+            "Side_A": self.a,
+            "Side_B": self.b,
+            "Side_C": self.c,
             "Area": self.get_area(),
             "Perimeter": self.get_perimeter()
         }

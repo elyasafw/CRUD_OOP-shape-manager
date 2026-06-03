@@ -4,16 +4,21 @@ import json
 import shape_manager as sm
 
 
-
-from pydantic import BaseModel
-
-
-class ShapeModel(BaseModel):
+class CreateShapeModel(BaseModel):
+    ID: int | None = None
     Type: str
     Area: float
     Perimeter: float
 
-    ID: int | None = None
+    Side: float | None = None
+    Radius: float | None = None
+    Width: float | None = None
+    Height: float | None = None
+    Side_A: float | None = None
+    Side_B: float | None = None
+    Side_C: float | None = None
+
+class UpdateShapeModel(BaseModel):
     Side: float | None = None
     Radius: float | None = None
     Width: float | None = None
@@ -35,21 +40,8 @@ def get_shapes():
     return shapes_list
 
 
-@app.get('/shapes/{id}')
-def get_shape(id: int):
-    shapes_objects = MANAGER.get_all_shapes()
-    shapes_list = [shape.to_dict() for shape in shapes_objects]
-    for shape in shapes_list:
-        if shape["ID"] == id:
-            return shape
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Shape ID not found in shapes list.."
-        )
-
-
 @app.post('/shapes')
-def create_shape(new_shape: ShapeModel):
+def create_shape(new_shape: CreateShapeModel):
     next_id = len(MANAGER.shapes) + 1
     clean_shape_dict = new_shape.model_dump(exclude_unset=True)
     clean_shape_dict["ID"] = next_id
@@ -69,3 +61,29 @@ def create_shape(new_shape: ShapeModel):
         "message": "Shape added successfully",
         "data": new_shape_object.to_dict(),
     }
+
+
+@app.get('/shapes/{id}')
+def get_shape(id: int):
+    shapes_objects = MANAGER.get_all_shapes()
+    shapes_list = [shape.to_dict() for shape in shapes_objects]
+    for shape in shapes_list:
+        if shape["ID"] == id:
+            return shape
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Shape ID not found in shapes list.."
+        )
+
+
+@app.put('/shapes/{id}')
+def update_shape(id: int, update_data: UpdateShapeModel):
+    clean_updates = update_data.model_dump(exclude_unset=True)
+    clean_updates_lower = {k.lower(): v for k, v in clean_updates.items()}
+    success = MANAGER.update_shape(id, clean_updates_lower)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Shape ID not found in shapes list..."
+        )
+    return {"message": "Shape updated successfully"}
