@@ -67,6 +67,17 @@ def calculate_total_shapes():
     return {"message": f"Total area of ​​all shapes: {round(sum(areas_list), 3)}"}
 
 
+@app.get('/shapes/count', status_code=status.HTTP_200_OK)
+def count_shapes():
+    sum_of_shapes = len(MANAGER.shapes)
+    if not sum_of_shapes:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The shape list is empty..."
+            )
+    return {"message": f"Count of shapes: {sum_of_shapes}"}
+
+
 @app.get('/shapes/{id}', status_code=status.HTTP_200_OK)
 def get_shape(id: int):
     shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
