@@ -24,3 +24,12 @@ class ShapeModel(BaseModel):
 
 
 app = FastAPI()
+
+MANAGER = sm.ShapeManager()
+
+ 
+@app.get('/shapes')
+def get_shapes():
+    shapes_objects = MANAGER.get_all_shapes()
+    shapes_list = [shape.to_dict() for shape in shapes_objects]
+    return shapes_list
