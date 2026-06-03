@@ -35,8 +35,7 @@ MANAGER = sm.ShapeManager()
  
 @app.get('/shapes')
 def get_shapes():
-    shapes_objects = MANAGER.get_all_shapes()
-    shapes_list = [shape.to_dict() for shape in shapes_objects]
+    shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
     return shapes_list
 
 
@@ -63,10 +62,17 @@ def create_shape(new_shape: CreateShapeModel):
     }
 
 
+@app.get('/shapes/total-area')
+def calculate_total_shapes():
+    shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
+    areas_list = [shape["Area"] for shape in shapes_list]
+    print(areas_list)
+    return {"message": f"Total area of ​​all shapes: {round(sum(areas_list), 3)}"}
+
+
 @app.get('/shapes/{id}')
 def get_shape(id: int):
-    shapes_objects = MANAGER.get_all_shapes()
-    shapes_list = [shape.to_dict() for shape in shapes_objects]
+    shapes_list = [shape.to_dict() for shape in MANAGER.shapes]
     for shape in shapes_list:
         if shape["ID"] == id:
             return shape
@@ -97,4 +103,4 @@ def delete_shape(id: int):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Shape ID not found in shapes list...",
         )
-    return {"message": f"Shape ID {id} was deleted successfully", "id": id}
+    return {"message": f"Shape ID {id} was deleted successfully"}
