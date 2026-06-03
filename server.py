@@ -33,3 +33,16 @@ def get_shapes():
     shapes_objects = MANAGER.get_all_shapes()
     shapes_list = [shape.to_dict() for shape in shapes_objects]
     return shapes_list
+
+
+@app.get('/shapes/{id}')
+def get_shape(id: int):
+    shapes_objects = MANAGER.get_all_shapes()
+    shapes_list = [shape.to_dict() for shape in shapes_objects]
+    for shape in shapes_list:
+        if shape["ID"] == id:
+            return shape
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Shape ID not found in shapes list.."
+        )
